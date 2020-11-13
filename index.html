@@ -1,0 +1,267 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+
+<title>Historic Tax Credit Impact Mapping</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"/>  
+    <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css"/> 
+    <link rel="stylesheet" href="css/style.css"/>
+
+  </head>
+
+  <body>
+      
+    <div id="sidebar">
+        <div class="toggle-btn" onclick="toggleSidebar()">
+                <div class="menu">
+                    <div>
+                      <input type="checkbox" id="toggle" />
+                      <label for="toggle" class="toggle"></label>
+                    </div>
+                </div>
+            </div>
+            <div id="info-div-chart"></div>     
+        <div class="sidebarContainer">
+           
+        <div id="info-div"></div>
+        <div id="htc-info-div">
+                <div class="accordion-container">
+                      <div class="accordion">
+                        <table style="width: 310px; padding-top: 0px">
+                            <tbody> 
+                                <tr><td width="100%" style="padding-left:0px"><h4>State HTC Program Details</h4></td><td width="10%" align="center" style="padding-top: 2px"><i class="fas fa-arrow-circle-right rotate rotate"></i></td></tr>
+                             </tbody>
+                          </table>
+                      </div>
+                      <div class="accordion-panel">
+                          <table id="layer-table" style="width: 100%; padding-top: 5px; padding-bottom: 10px;"><div id='htc-state-text'></div></table>  
+                      </div>
+                </div>          
+        </div>
+        <div class="breakStyle">   
+        <hr>     
+        <h3>Historic Tax Credit Impacts</h3>
+        </div>    
+        <div class="main-tab-container">
+            <div class="tabs"> <!-- Tabs -->
+                <ul id="tab-navigation">
+                    <li data-target="#tabOne-container" class="tabOne selected">Economic Impact</li>
+                    <li data-target="#tabTwo-container" class="tabTwo noSelected">Number of Projects</li>
+                    <li data-target="#tabThree-container" class="tabThree noSelected">Project Types</li>
+                </ul>
+            </div>
+            <div class="tab-containers">
+
+                <div id="tabOne-container" class="tabContainer">
+                    <div id="cost-div">
+                    <h4>HTC Economic Impact by Year</h4>    
+                      <canvas id="cost-chart"/>
+                    </div>
+                </div>
+
+                <div id="tabTwo-container" class="tabContainer hidden">
+                    <div id="numb-div">
+                    <h4>Number of HTC Projects by Year</h4>      
+                      <canvas id="numb-chart"/>
+                    </div>
+                </div>
+
+                <div id="tabThree-container" class="tabContainer hidden">
+                    <div id="proj-div">
+                    <h4>Number of HTC Projects by Type</h4>    
+                      <canvas id="proj-chart"/>
+                    </div>
+    
+                </div>
+            </div>
+        </div>    
+                
+        </div>
+    </div>
+      
+    <div id="sidebarTwo">
+        
+        <div class="toggle-btn-two" onclick="toggleSidebarTwo()">
+            <div class="menutwo">
+                <div>
+                  <input type="checkbox" id="toggleTwo" />
+                  <label for="toggleTwo" class="toggleTwo"></label>
+                </div>
+            </div>
+        </div>
+        
+        <div id="info-div-chart-two"></div>
+        
+        <div class="sidebarContainerTwo">
+            <div id="info-div-two"></div>
+        </div>
+    </div>
+      
+    <div id="menubar">
+        <h1>Federal Historic Tax Credit Impacts | 2001 - 2019</h1>
+        <hr>
+        <div class="menubarContainer">
+            <div>
+            <h3>Map Controls</h3>
+                <table style="padding-top: 8px;">
+                <tbody>
+                <tr>
+                <td width="95%" colspan="2" class="htcCityTitle"><h5>HTC Projects by City</h5></td>
+                <td width="95%" colspan="2" class="htcProjTitle"><h5>Individual HTC Projects by Type</h5></td>
+                <td width="5%"><span><div class="tooltip"><i class="fas fa-question-circle" style="font-size:13px"></i><span class="tooltiptext"><h5>Zoom in to see individual Historic Tax Credit projects. Once you've zoomed in far enough individual projects will appear along with a project type legend.</h5></span></div></span></td>    
+                </tr>   
+                <tr id="leg2" class="htcCityLeg"><td width="290px" align="left" colspan="2" style="padding-top: 6px; padding-bottom: 3px">
+                      <span class="legendText">1</span>
+                      <span class="dot1"></span>
+                      <span class="legendText">2-5</span>
+                      <span class="dot2"></span>
+                      <span class="legendText">6-10</span>
+                      <span class="dot3"></span>
+                      <span class="legendText">11 and over</span>
+                      <span class="dot4"></span>
+                    </td>
+                </tr>
+                <tr id="leg1" class="htcProjLeg">
+                    <td width="290px" align="left" colspan="2" style="padding-top: 6px; padding-bottom: 0px">
+                        <ol>
+                          <li class='leg'>Bank</li>
+                          <li class='leg'>Barn</li>
+                          <li class='leg'>Church</li>
+                          <li class='leg'>Club</li>
+                          <li class='leg'>Commercial</li>
+                          <li class='leg'>Hospital</li>
+                          <li class='leg'>Hotel</li>
+                          <li class='leg'>Housing</li>
+                          <li class='leg'>Multi-Fam. Housing (2)</li>
+                          <li class='leg'>Multi-Fam. Housing (3)</li>
+                          <li class='leg'>Industrial</li>
+                          <li class='leg'>Mixed-Use</li>
+                          <li class='leg'>Not Reported</li>
+                          <li class='leg'>Office</li>
+                          <li class='leg'>Other</li>
+                          <li class='leg'>School</li>
+                          <li class='leg'>Theater</li>    
+                        </ol>
+                    </td>
+                </tr>
+                <tr id="filtTitle">
+                    <td width="290px" align="left" colspan="2" style="padding-top: 0px; padding-bottom: 4px">Filter Projects by Type</td>    
+                </tr>    
+                <tr id="filt">   
+                    <td width="290px" align="left" colspan="2" style="padding-top: 0px; padding-bottom: 8px">
+                        <select id="useFilter" class="dropdown">
+                            <option value="" selected>All Project Types</option>
+                            <option value="Bank">Bank</option>
+                            <option value="Barn">Barn</option>
+                            <option value="Church">Church</option>
+                            <option value="Club">Club</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Hospital">Hospital</option>
+                            <option value="Hotel">Hotel</option>
+                            <option value="Housing">Housing</option>
+                            <option value="Housing (2)">Mult-Family Housing (2)</option>
+                            <option value="Housing (3)">Mult-Family Housing (3)</option>
+                            <option value="Industrial">Industrial</option>
+                            <option value="Multi-Use">Mixed-Use</option>
+                            <option value="Not Reported">Not Reported</option>
+                            <option value="Office">Office</option>
+                            <option value="Other">Other</option>
+                            <option value="School">School</option>
+                            <option value="Theatre">Theatre</option>                     
+                        </select>
+                    </td>    
+                </tr>    
+                <tr id="cityTitle">
+                    <td width="290px" align="left" colspan="2" style="padding-top: 0px; padding-bottom: 4px">Search by Location</td>    
+                </tr>    
+                <tr id="citysearch">
+                    <td width="290px" colspan="2" align="left"  style="padding-top: 0px; padding-bottom: 8px">
+                        <div id="citySearch"></div>
+                    </td>
+                </tr>    
+                <tr>
+                <td style="padding-bottom: 3px">
+                    
+                <label class="switch"><input type="checkbox" id="check3"><span class="slider"></span></label>    
+                    
+                </td>
+                <td><h5>HTC Projects by Congressional District</h5></td>
+                </tr>
+                <tr class="cdLeg"><td width="290px" align="left" colspan="2" style="padding-top: 3px; padding-bottom: 6px">
+                      <span class="legendText">Democrat</span>
+                      <span class="partySqD"></span>
+                      <span class="legendText">Republican</span>
+                      <span class="partySqR"></span>
+                      <span class="legendText">Vacant</span>
+                      <span class="partySqV"></span>
+                    </td>
+                </tr>
+                <tr id="cdTitle">
+                    <td width="290px" align="left" colspan="2" style="padding-top: 0px; padding-bottom: 4px">Filter Congressional Districts by Party</td>    
+                </tr>    
+                <tr id="cdFilt">   
+                    <td width="290px" align="left" colspan="2" style="padding-top: 0px; padding-bottom: 8px">
+                        <select id="cdFilter" class="dropdown">
+                            <option value="" selected>All Parties</option>
+                            <option value="Democrat">Democrat</option>
+                            <option value="Republican">Republican</option>
+                            <option value="Vacant">Vacant</option>                     
+                        </select>
+                    </td>    
+                </tr>
+                <tr id="cdTitleTwo">
+                    <td width="290px" align="left" colspan="2" style="padding-top: 0px; padding-bottom: 4px">Congressional District Search</td>    
+                </tr>    
+                <tr id="cdsearcher">
+                    <td width="290px" colspan="2" align="left"  style="padding-top: 0px; padding-bottom: 8px">
+                        <div id="cdSearch"></div>
+                    </td>
+                </tr>    
+                <tr>
+                <td style="padding-bottom: 2px"><label class="switch"><input type="checkbox" id="check4"><span class="slider"></span></label></td>
+                <td><h5>HTC Projects by State</h5></td>
+                </tr>
+                <tr class="stateLeg"><td width="290px" align="left" colspan="2" style="padding-top: 3px; padding-bottom: 3px">
+                      <span class="legendText">State HTC Program</span>
+                      <span class="stateY"></span>
+                      <span class="legendText">No State HTC Program</span>
+                      <span class="stateN"></span>
+                    </td>
+                </tr>     
+                </tbody>
+                </table>
+            </div>   
+        </div>
+    </div> 
+    
+    <div id="aboutDiv">
+        <div class="logo-main"><a href="http://www.savingplaces.org" target="_blank"><img src="img/NTHP_LOGO_RGB_Tagline.png" style="width:250px;"></a></div>
+        <h3>About the Map</h3>
+        <hr>
+        <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
+        <br>
+        <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
+    </div>   
+      
+    <div id="viewDiv"></div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js"></script>
+    <script src="https://js.arcgis.com/4.16/"></script>  
+    <script src="js/script.js"></script>
+      
+    <script id="cdLabelExp">
+      var STATE = $feature.state_n;
+      var DIST = $feature.NAMELSAD;
+      var labels = [ STATE, DIST ];
+      return Concatenate(labels, TextFormatting.NewLine);
+    </script>  
+         
+  </body>
+</html>
